@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<bottomdrawer:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:bottomdrawer="https://schemas.the49.com/dotnet/2023/maui"
+             xmlns:dataModel="clr-namespace:GPRTU.Models"
+             xmlns:ViewModel="clr-namespace:GPRTU.ViewModels"
+             x:Class="GPRTU.LocationSheet"
+             BackgroundColor="{StaticResource Gray200}"
+             x:Name="Botdrawer"
+             HandleColor="{StaticResource Cyan300Accent}"
+             HasBackdrop="True"
+             HasHandle="True"
+             IsCancelable="True"
+             Padding="16, 32" >
+
+    <bottomdrawer:BottomSheet.Detents >
+        <bottomdrawer:ContentDetent />
+           <bottomdrawer:RatioDetent Ratio="1.00" />
+    </bottomdrawer:BottomSheet.Detents>
+
+      <Grid
+          Margin="0"
+          Padding="0"
+          RowDefinitions="Auto,Auto">
+                   <Frame BorderColor="#ffffff"
+                          Grid.Row="0"
+                          Opacity="0.3"
+                            Margin="0,0,0, 10"
+                            HasShadow="True"
+                            HeightRequest="45"
+                            Padding="0"
+                            CornerRadius="5"
+                            HorizontalOptions="FillAndExpand"
+                            BackgroundColor="#ffffff"> 
+
+                        <SearchBar
+                            VerticalOptions="Center"
+                            IsTextPredictionEnabled="True"
+                            BackgroundColor="Transparent"
+                            TextChanged="SearchDest"
+                            PlaceholderColor="{StaticResource Tertiary}"
+                            TextColor="{StaticResource Tertiary}" 
+                            FontSize="18"
+                            Margin="5,0,0,0"
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Text"
+                            x:Name="SearchedDest"
+                          
+                            Placeholder=" Search Destination" />
+                   </Frame>
+
+       <CollectionView
+               Grid.Row="1"
+               Grid.RowSpan="2"
+                    x:Name="searchCollection"
+                    SelectionMode="Single"
+                    ItemsSource="{Binding MyItems}"
+                    SelectionChanged="LocationSelected"
+                    VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                                Span="1"
+                                                HorizontalItemSpacing="15"
+                                                VerticalItemSpacing="15"/>
+                              </CollectionView.ItemsLayout>
+
+               <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dataModel:Pickuploc"> 
+                      <Border 
+                        StrokeThickness="0" 
+                        HeightRequest="60">
+                            <Border.Shadow>
+                                <Shadow Radius="20"
+                                        Opacity="0.2" />
+                            </Border.Shadow>
+                            <Grid 
+                                RowDefinitions="60" 
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="10"
+                                Padding="15,0,15,0" 
+                                VerticalOptions="Center">
+                                   
+                                    <VerticalStackLayout
+                                        Grid.Column="0"
+                                        VerticalOptions="Center">
+                                            <Label Text="{Binding StationName}"
+                                                    FontAttributes="Bold" />
+                                            <Label Text="{Binding BusTerminals}"
+                                                    FontSize="12" />
+                                        <Label Text="{Binding TransVendors}"
+                                                    FontSize="Default"
+                                                    LineBreakMode="NoWrap"/>
+                                    </VerticalStackLayout>
+
+                            </Grid>
+                       </Border>
+                 </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>  
+      </Grid>
+</bottomdrawer:BottomSheet>

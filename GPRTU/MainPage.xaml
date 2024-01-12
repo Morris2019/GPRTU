@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             xmlns:bottomdrawer="https://schemas.the49.com/dotnet/2023/maui"
+             Shell.NavBarIsVisible="False"
+             xmlns:dataModel="clr-namespace:GPRTU.Models"
+             xmlns:ViewModel="clr-namespace:GPRTU.ViewModels"
+             x:DataType="ViewModel:MainPageViewModel"
+             x:Class="GPRTU.MainPage">
+
+  <RefreshView
+             x:Name="PendingRefresh"
+             IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+             Command="{Binding RefreshCommand}"
+             HorizontalOptions="CenterAndExpand"
+             VerticalOptions="CenterAndExpand"
+             RefreshColor="{StaticResource Cyan200Accent}">
+   
+     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+         <maps:Map x:Name="UrbanMap"
+                   Grid.RowSpan="3"
+                   MapType="Street"
+                   IsScrollEnabled="True"
+                   IsZoomEnabled="True"
+                   Grid.Row="0" />
+        
+          <Frame
+                Margin="20,10,20,-20"
+                Grid.Row="0"
+                BackgroundColor="White"
+                CornerRadius="10"
+                Padding="5,0"
+                BorderColor="{StaticResource White}"
+                HasShadow="True"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="CenterAndExpand">
+
+               <StackLayout Orientation="Vertical"
+                            Padding="5">
+
+                   <Frame
+                        BorderColor="{StaticResource White}"
+                        Opacity="0.5"
+                        Margin="0"
+                        HasShadow="True"
+                        HeightRequest="45"
+                        Padding="0"
+                        CornerRadius="5"
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="{StaticResource Gray400}">
+                        <Entry
+                            VerticalOptions="Center"
+                            IsTextPredictionEnabled="True"
+                            BackgroundColor="Transparent"
+                            PlaceholderColor="{StaticResource Tertiary}"
+                            TextColor="{StaticResource Tertiary}" 
+                            Placeholder=" Pickup Location "
+                            x:Name="SearchPara"
+                            Margin="5,0,0,0"
+                            Text="{Binding Origin}"
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Text">
+                            <Entry.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DestinationSearch}"/>
+                            </Entry.GestureRecognizers>
+                        </Entry>
+                   </Frame> 
+                    <Frame BorderColor="#ffffff"
+                                   Opacity="0.3"
+                                   Margin="0"
+                                   HasShadow="True"
+                                   HeightRequest="45"
+                                   Padding="0"
+                                   CornerRadius="5"
+                                   HorizontalOptions="FillAndExpand"
+                                   BackgroundColor="#ffffff"> 
+
+                        <Entry
+                            VerticalOptions="Center"
+                            IsTextPredictionEnabled="True"
+                            BackgroundColor="Transparent"
+                            PlaceholderColor="{StaticResource Tertiary}"
+                            TextColor="{StaticResource Tertiary}" 
+                            Margin="5,0,0,0"
+                            HorizontalOptions="FillAndExpand"
+                            Keyboard="Text"
+                            x:Name="SearchDest"
+                            Text="{Binding Destination}"
+                            Placeholder=" Search Destination" >
+                            <Entry.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding DestinationSearch}"/>
+                            </Entry.GestureRecognizers>
+                        </Entry>
+                    </Frame>
+
+                    <Button Text="Get Route"
+                            Command="{Binding GetRouteCommand}"
+                            Grid.Row="2"
+                            BackgroundColor="{StaticResource Cyan200Accent}"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center" />
+
+                            
+                   <StackLayout Orientation="Horizontal"
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="Center"
+                                Padding="10">
+
+                       <Label Text="{Binding RouteDistance}"
+                              FontSize="Medium"
+                              FontAttributes="Bold"
+                              HorizontalOptions="CenterAndExpand"
+                              TextColor="{StaticResource Tertiary}"/>
+                   
+
+                            <Label Text="  Miles"
+                                   FontSize="Medium"
+                                   HorizontalOptions="CenterAndExpand"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Cyan300Accent}"/>
+                   </StackLayout>
+                </StackLayout>
+             </Frame>
+       
+    </Grid>
+  </RefreshView>
+</ContentPage>
+
